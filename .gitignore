@@ -1,0 +1,23 @@
+.vscode
+dbsqlite3
+blog/__pycache__
+blog/migrations
+_blogproj/__pycache__
+stat/
+
+*jpg
+*png
+db.sqlite3
+/migrations/
+images/
+stop git from tracking db.sqlite3
+git rm --cached db.sqlite3
+git rm -r --cached db.sqlite3
+something/fuck/
+students/migrations/
+students/__pycache__/
+home/migrations
+home/__pycache__/
+gundoliya/__pycache__/
+sdjbfb
+teacher/

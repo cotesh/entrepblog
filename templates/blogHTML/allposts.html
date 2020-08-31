@@ -1,0 +1,70 @@
+{% extends 'blogHTML/base.html' %}
+
+{% include "blogHTML/navbar.html" %}
+{% block content %}
+<div class="container">
+    <!-- <div class="col-md-12"> -->
+
+    <h1>{{ text }}</h1>
+    <form action="" method="GET" class="offset-md-2">
+        <input type="text" name="query", value="{{request.GET.query}}">
+        <input type="submit" value="Search">
+    </form>
+    {% for post in page_obj %}
+    <div class="row">
+        <div class="col-md-6 offset-md-2 poster">
+            <div class="thumbnail">
+                {% if post.photu %}
+                <img src='{{ post.photu.url }}' class='img-thumbnail' />
+                {% endif %}
+                <div class="caption">
+                    {% if post.draft %}<h4 style="color:rgb(175, 26, 26)">Staff only: Draft</h4>{% endif %} 
+                    {% if post.published > today %}<h3>Staff
+                        Only:
+                        Future Post</h3>{% endif %}
+                    <h3><a href='{{ post.url }}'> {{ post.title }} </a> <small>{{ post.made|timesince }}</small> </h3>
+                    {% if obj.user.get_full_name %}<p>Author: {{ obj.user.get_full_name }}</p>{% endif %}
+                    <p>{{ post.content|linebreaks|truncatechars:120 }}</p>
+                    <p><a href="{{ post.url }}" class="btn btn-primary" role="button">View</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+
+    <div class="pagination col-md-6 offset-md-2">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?{{cur_page}}=1">&laquo; first</a>
+            <a href="?{{cur_page}}={{ page_obj.previous_page_number }}&query= {{request.GET.query}}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?{{cur_page}}={{ page_obj.next_page_number }}&query= {{request.GET.query}}">next</a>
+            <a href="?{{cur_page}}={{ page_obj.paginator.num_pages }}&query= {{request.GET.query}}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    <!-- </div> -->
+    <!-- <div class="container mt-3">
+
+    <div class="posts">
+        {% for post in qs %}
+        <span class="head">
+            {% url "posts:detail" id=post.id %}
+            <a href="{{post.url }}" class=" pb-1">{{post.title}} </a>
+            <span>{{post.made}}</span>
+        </span>
+        <p style="font-size: 1rem; background-color: rgb(192 216 118);">{{post.content}}</p>
+        <br>
+        {% endfor %}
+    </div>
+</div> -->
+</div>
+
+{% endblock %}

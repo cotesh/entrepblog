@@ -1,0 +1,55 @@
+{% extends 'blogHTML/base.html' %}
+{% block header %}{{post.id}} | {{block.super}} {% endblock header %}
+{% block content %}
+{% include "blogHTML/navbar.html" %}
+{{share_string}}
+<div class='container'>
+
+    <div class="posts col-md-7 offset-md-2 ">
+        <h2>{{post.title}} | {{post.made}}</h2>
+        {% if post.user.get_full_name %}
+        <h3>Written by: {{post.user.get_full_name}}</h3>
+        {% endif %}
+        <br>
+
+        <img src="{{post.photu.url}}" alt="" class="img-fluid">
+        <p>
+            {{request.build_absolute_uri }}
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+                Facebook
+            </a>
+            <a
+                href="https://twitter.com/home?status={{ object.content|truncatechars:80 }}%20{{ request.build_absolute_uri }}">
+                Twitter
+            </a>
+            <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Share on Google+</a>
+            <a
+                href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ object.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}">
+                Linkedin
+            </a>
+            <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}.">
+                Reddit
+            </a>
+        </p>
+        <h5>{{post.content| linebreaks}}</h5>
+    </div>
+
+
+    <!-- --------------------------------------social media section---------------------------------- -->
+
+    <div class="posts col-md-7 offset-md-2 ">
+
+        <!-- ------------------- like and share button----------------- -->
+        <div class="fb-like" data-href="{{request.build_absolute_uri }}" data-width="" data-layout="standard" data-action="like" data-size="large" data-share="true"></div>
+
+        <!-- ------------------- facebooks comment section -------------- -->
+        <div class="fb-comments" data-href="{{request.build_absolute_uri }}" data-numposts="5"
+            data-width=""></div>
+    </div>
+
+    <!-- --------------------------------------social media section-------------------- -->
+
+    
+</div>
+
+{% endblock %}
